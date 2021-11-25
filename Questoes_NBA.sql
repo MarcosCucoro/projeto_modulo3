@@ -1,23 +1,45 @@
 /* PERGUNTAS */
-/* Quais os melhores times de cada liga? */
+/* 1 - Quais times tem? */
+SELECT ABREVIACAO, CIDADE, NOME_TIME, ANO_FUNDACAO, ARENA, TREINADOR FROM TIMES;
 
-/* Quais os melhores times de basquete? */
-
-/* Qual o melhor time de cada temporada(ano)? */
-
-/* Quais times tem? */
-SELECT * FROM TIMES;
-
-/* Times mais antigos? */
+/* 2 - Times mais antigos? */
 SELECT CIDADE, NOME_TIME, ANO_FUNDACAO FROM TIMES
 ORDER BY ANO_FUNDACAO;
 
-/* Melhores jogadores da temporada? */
+/* 3 - 5 melhores times de cada conferencia na temporada 2018? */
+/* 3.a - Conferencia EAST*/
+SELECT CIDADE, NOME_TIME, TEMPORADA, CONFERENCIA, JOGOS, VITORIAS, DERROTAS FROM CLASSIFICACAO
+INNER JOIN TIMES USING(TIME_ID)
+WHERE TEMPORADA = 2018 AND CONFERENCIA LIKE 'EAST'
+GROUP BY NOME_TIME
+LIMIT 5;
 
-/* Quais jogadores fizeram mais sesta na temporada X? */
+/* 3.b - Conferencia WEST*/
+SELECT CIDADE, NOME_TIME, TEMPORADA, CONFERENCIA, JOGOS, VITORIAS, DERROTAS FROM CLASSIFICACAO
+INNER JOIN TIMES USING(TIME_ID)
+WHERE TEMPORADA = 2018 AND CONFERENCIA LIKE 'WEST'
+GROUP BY NOME_TIME
+LIMIT 5;
 
-/* Quem mais deu assistencia? */
+/* 4 - Jogadores dos times de cada Conferencia no ano de 2018*/
+/* 4.a - Conferencia EAST */
+SELECT T.CIDADE, T.NOME_TIME, J.NOME_JOGADOR, C.TEMPORADA, C.CONFERENCIA, C.JOGOS, MAX(C.VITORIAS) AS VITORIAS, C.RECORDES_CASA, C.RECORDES_FORA FROM CLASSIFICACAO C
+INNER JOIN TIMES T ON C.TIME_ID = T.TIME_ID
+INNER JOIN JOGADOR J ON J.TIME_ID = T.TIME_ID
+WHERE C.TEMPORADA = 2018 AND C.CONFERENCIA LIKE 'EAST'
+GROUP BY J.NOME_JOGADOR;
 
-/* Maiores tocos da liga? */
+/* 4.b - Conferencia WEST */
+SELECT T.CIDADE, T.NOME_TIME, J.NOME_JOGADOR, C.TEMPORADA, C.CONFERENCIA, C.JOGOS, MAX(C.VITORIAS) AS VITORIAS, C.RECORDES_CASA, C.RECORDES_FORA FROM CLASSIFICACAO C
+INNER JOIN TIMES T ON C.TIME_ID = T.TIME_ID
+INNER JOIN JOGADOR J ON J.TIME_ID = T.TIME_ID
+WHERE C.TEMPORADA = 2018 AND C.CONFERENCIA LIKE 'WEST'
+GROUP BY J.NOME_JOGADOR;
 
-/* Evolução dos times */
+/* 4 - Qual o melhor time de cada temporada(ano)? */
+
+
+
+
+
+
